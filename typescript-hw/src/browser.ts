@@ -1,25 +1,34 @@
 import { blink, marquee, mix, typing } from './effects';
 import { segmentNames } from './model';
 import { carryRight } from './utils';
-export function isElement(element) {
+export type domOptionsType = {
+  className: string,
+  templateId: string,
+};
+export type templateIdType = string;
+export type TemplateType = HTMLElement | HTMLTemplateElement | Node;
+export type ImageCreatorType = (() => Node) | null;
+type AmountType = number;
+
+export function isElement(element: TemplateType): element is HTMLElement {
   return element.nodeType === 1;
 }
-export function isTemplateNode(element) {
+export function isTemplateNode(element: TemplateType): element is HTMLTemplateElement {
   return isElement(element) && element.nodeName === 'TEMPLATE';
 }
-export function imageCreator(templateId) {
-  const templateElement = document.getElementById(templateId);
+export function imageCreator(templateId: templateIdType): ImageCreatorType {
+  const templateElement: TemplateType | null = document.getElementById(templateId);
   if (!templateElement) return null;
   if (!isTemplateNode(templateElement)) return null;
   const clone = () => templateElement.content.cloneNode(true);
   return clone;
 }
-export function checkNonNullable(value) {
+export function checkNonNullable(value: ImageCreatorType) {
   if (value === null) {
     throw new Error('value is null');
   }
 }
-export function makeDisplays(amount, parentElement, domOptions) {
+export function makeDisplays(amount: AmountType, parentElement, domOptions) {
   const displays = [...parentElement.querySelectorAll(`.${domOptions.className}`)];
   for (let i = displays.length - 1; i >= amount; i -= 1) {
     displays[i].remove();
@@ -42,7 +51,7 @@ export function updateDisplay(segments, display) {
     display.classList.add(segmentName);
   }
 }
-export function updateDisplayBlock(segments, parentElement, domOptions) {
+export function updateDisplayBlock(segments, parentElement, domOptions: domOptionsType) {
   const displays = makeDisplays(segments.length, parentElement, domOptions);
   segments.forEach((segment, i) => {
     updateDisplay(segment, displays[i]);
@@ -53,7 +62,7 @@ function startAnimationBuilder(frameBuffers) {
     frameBuffers.set(parent, [...frames].reverse());
   };
 }
-export function initAnimation(domOptions) {
+export function initAnimation(domOptions: domOptionsType) {
   const frameDelay = 100;
   const frameBuffers = new Map();
   function animateFrame() {

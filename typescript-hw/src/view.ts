@@ -1,8 +1,11 @@
-import { segmentCodes } from './model';
-export function isKnownChar(char: string): boolean {
+import { segmentCodes, type segmentNameType } from './model';
+import { type optionsType } from './effects';
+
+
+export function isKnownChar(char: string): char is segmentNameType {
   return char in segmentCodes;
 }
-export function charToDisplay(char: string, options: any) {
+export function charToDisplay(char: string, options: optionsType): segmentNameType | [] {
   if (options?.convertToUpperCase) {
     char = char.toUpperCase();
   }
@@ -14,9 +17,9 @@ export function charToDisplay(char: string, options: any) {
   }
   return segmentCodes[char];
 }
-export function stringToDisplay(input: string, options: any) {
+export function stringToDisplay(input: string, options: optionsType) {
   return [...input].map(c => charToDisplay(c, options));
 }
-export function stringToDisplayArea(input: string, options: any) {
+export function stringToDisplayArea(input: string, options: optionsType) {
   return input.split('\n').map((line: string) => stringToDisplay(line, options));
 }

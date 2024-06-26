@@ -1,5 +1,8 @@
-export const segmentNames: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm'];
-export const segmentCodes: Record<string, string[]> = {
+export const segmentNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm'] as const;
+
+export type segmentNameType = typeof segmentNames[number];
+
+export const segmentCodes: { [key: string]: segmentNameType[] } = {
   '0': ['a', 'b', 'c', 'd', 'e', 'f', 'j', 'k'],
   '1': ['b', 'c', 'j'],
   '2': ['a', 'b', 'd', 'e', 'g1', 'g2'],
@@ -37,3 +40,16 @@ export const segmentCodes: Record<string, string[]> = {
   Y: ['h', 'j', 'l'],
   Z: ['a', 'd', 'j', 'k'],
 };
+
+
+// type a = typeof segmentCodes;
+
+type b = keyof typeof segmentCodes;
+
+
+
+
+
+// type OptionsFlags<Type> = {
+//   [Property in keyof Type]: segmentNameType[];
+// };

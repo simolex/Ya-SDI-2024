@@ -4,7 +4,7 @@ export function clampToLength(state, length) {
 export function emptyDisplays(amount) {
   return Array.from({ length: amount }, () => []);
 }
-export function carryRight(fn {}, arg) {
+export function carryRight(fn, arg) {
   return (...newArgs) => fn(...newArgs, arg);
 }
 export function randomItem(set) {
