@@ -1,6 +1,7 @@
+import { type segmentNameType } from './model';
 import { clampToLength, emptyDisplays, randomItem } from './utils';
 import { stringToDisplay } from './view';
-export type optionsType = { convertToUpperCase: boolean, unknownChar?: string };
+export type optionsType = { convertToUpperCase: boolean; unknownChar?: 'exception' | segmentNameType[] };
 
 const DEFAULT_VIEW_OPTIONS: optionsType = { convertToUpperCase: true };
 export function marquee(input, displayAmount = input.length, options: optionsType = DEFAULT_VIEW_OPTIONS) {

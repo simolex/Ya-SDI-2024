@@ -1,11 +1,10 @@
-import { segmentCodes, type segmentNameType } from './model';
+import { segmentCodes, type charAllowedType, type segmentNameType } from './model';
 import { type optionsType } from './effects';
 
-
-export function isKnownChar(char: string): char is segmentNameType {
+export function isKnownChar(char: string): char is charAllowedType {
   return char in segmentCodes;
 }
-export function charToDisplay(char: string, options: optionsType): segmentNameType | [] {
+export function charToDisplay(char: string, options: optionsType): segmentNameType[] {
   if (options?.convertToUpperCase) {
     char = char.toUpperCase();
   }
