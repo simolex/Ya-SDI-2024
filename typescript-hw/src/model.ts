@@ -1,11 +1,69 @@
+// type DeepPartial<T> = {
+//   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+// };
+
 export const segmentNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm'] as const;
 
-export type segmentNameType = typeof segmentNames[number] | never;
+
 
 // export type segmentType = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' |
 //   'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' |
 //   'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' |
 //   'U' | 'V' | 'W' | 'X' | 'Y' | 'Z';
+
+export type segmentNameType = (typeof segmentNames)[number] | '';
+
+// const charsAllowed = [
+//   '0',
+//   '1',
+//   '2',
+//   '3',
+//   '4',
+//   '5',
+//   '6',
+//   '7',
+//   '8',
+//   '9',
+//   'A',
+//   'B',
+//   'C',
+//   'D',
+//   'E',
+//   'F',
+//   'G',
+//   'H',
+//   'I',
+//   'J',
+//   'K',
+//   'L',
+//   'M',
+//   'N',
+//   'O',
+//   'P',
+//   'Q',
+//   'R',
+//   'S',
+//   'T',
+//   'U',
+//   'V',
+//   'W',
+//   'X',
+//   'Y',
+//   'Z',
+// ] as const;
+
+// export type charAllowedType = (typeof charsAllowed)[number];
+
+// type OnlyFirstChar<S extends string> = S extends `${infer $TFirstChar}${...Rest}` ? $TFirstChar : '';
+// type Char<S extends string> = S extends S & OnlyFirstChar<S> ? S & OnlyFirstChar<S> : string & { length: 1 };
+
+// type Char<S extends string, Acc extends 0[] = []> = S extends `${string}${infer $Rest}`
+//   ? Char<$Rest, [...Acc, 0]>
+//   : Acc['length'];
+
+// let a: Char<string, 0[1]>;
+// a = 'A';
+
 
 export const segmentCodes: { [key: string]: segmentNameType[] } = {
   '0': ['a', 'b', 'c', 'd', 'e', 'f', 'j', 'k'],
@@ -45,10 +103,6 @@ export const segmentCodes: { [key: string]: segmentNameType[] } = {
   "Y": ['h', 'j', 'l'],
   "Z": ['a', 'd', 'j', 'k'],
 };
-
-
-
-
 
 
 

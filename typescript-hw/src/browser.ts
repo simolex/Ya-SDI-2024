@@ -2,8 +2,8 @@ import { blink, marquee, mix, typing } from './effects';
 import { segmentNames, segmentNameType } from './model';
 import { carryRight } from './utils';
 export type domOptionsType = {
-  className: string,
-  templateId: string,
+  className: string;
+  templateId: string;
 };
 export type templateIdType = string;
 export type TemplateType = HTMLElement | HTMLTemplateElement | Node;
@@ -33,7 +33,7 @@ export function checkNonNullable(value: ImageCreatorType) {
 }
 
 export function makeDisplays(amount: AmountType, parentElement: HTMLElement, domOptions: domOptionsType): Element[] {
-  const displays = [...parentElement.querySelectorAll(`.${domOptions.className}`)];
+  const displays: Element[] = [...parentElement.querySelectorAll(`.${domOptions.className}`)];
   for (let i = displays.length - 1; i >= amount; i -= 1) {
     displays[i].remove();
     displays.pop();
@@ -47,7 +47,8 @@ export function makeDisplays(amount: AmountType, parentElement: HTMLElement, dom
   }
   return displays;
 }
-export function updateDisplay(segments: segmentNameType[], display) {
+
+export function updateDisplay(segments: segmentNameType[], display: Element) {
   for (const segmentName of segmentNames) {
     display.classList.remove(segmentName);
   }
@@ -56,13 +57,16 @@ export function updateDisplay(segments: segmentNameType[], display) {
   }
 }
 export function updateDisplayBlock(segments: segmentNameType[][], parentElement: HTMLElement, domOptions: domOptionsType) {
+
   const displays = makeDisplays(segments.length, parentElement, domOptions);
-  segments.forEach((segment, i) => {
+  segments.forEach((segment: segmentNameType[], i) => {
     updateDisplay(segment, displays[i]);
   });
 }
+
 //TODO
 function startAnimationBuilder(frameBuffers: Map<any, any>): (_: any, __: any) => void {
+
   return function start(frames, parent) {
     frameBuffers.set(parent, [...frames].reverse());
   };

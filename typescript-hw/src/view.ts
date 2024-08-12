@@ -2,6 +2,7 @@ import { segmentCodes, type segmentNameType } from './model';
 import { type optionsType } from './effects';
 
 
+
 export function isKnownChar(char: string): boolean {
   return char in segmentCodes;
 }
