@@ -22,12 +22,12 @@ checkNonNullable(getImage);
 const startAnimation = initAnimation(domOptions);
 const defaultAnimations = getDefaultAnimations(startAnimation);
 const segmentDescription = document.getElementById('segmentDescription');
-segmentDescription.append(getImage());
+segmentDescription?.append(getImage());
 const [descriptionDisplay] = makeDisplays(1, segmentDescription, domOptions);
 updateDisplay('abcdefhijklm'.split('').concat(['g1', 'g2']), descriptionDisplay);
 const oneLetter = document.getElementById('oneLetter');
 const oneLetterImage = document.getElementById('oneLetterImage');
-oneLetter.oninput = function (event) {
+oneLetter.oninput = function (event: Event) {
   const letter = event.target.value[0] || ' ';
   oneLetterImage.innerHTML = '';
   oneLetterImage.append(getImage());
@@ -38,7 +38,7 @@ oneLetter.oninput = function (event) {
 };
 const textString = document.getElementById('textString');
 const textStringImage = document.getElementById('textStringImage');
-textString.oninput = function (event) {
+textString.oninput = function (event: Event) {
   const text = event.target.value;
   const segments = stringToDisplay(text, { convertToUpperCase: true });
   updateDisplayBlock(segments, textStringImage, domOptions);

@@ -1,5 +1,5 @@
 import { blink, marquee, mix, typing } from './effects';
-import { segmentNames } from './model';
+import { segmentNames, segmentNameType } from './model';
 import { carryRight } from './utils';
 export type domOptionsType = {
   className: string,
@@ -13,9 +13,11 @@ type AmountType = number;
 export function isElement(element: TemplateType): element is HTMLElement {
   return element.nodeType === 1;
 }
+
 export function isTemplateNode(element: TemplateType): element is HTMLTemplateElement {
   return isElement(element) && element.nodeName === 'TEMPLATE';
 }
+
 export function imageCreator(templateId: templateIdType): ImageCreatorType {
   const templateElement: TemplateType | null = document.getElementById(templateId);
   if (!templateElement) return null;
@@ -23,12 +25,14 @@ export function imageCreator(templateId: templateIdType): ImageCreatorType {
   const clone = () => templateElement.content.cloneNode(true);
   return clone;
 }
+
 export function checkNonNullable(value: ImageCreatorType) {
   if (value === null) {
     throw new Error('value is null');
   }
 }
-export function makeDisplays(amount: AmountType, parentElement, domOptions) {
+
+export function makeDisplays(amount: AmountType, parentElement: HTMLElement, domOptions: domOptionsType): Element[] {
   const displays = [...parentElement.querySelectorAll(`.${domOptions.className}`)];
   for (let i = displays.length - 1; i >= amount; i -= 1) {
     displays[i].remove();
@@ -43,7 +47,7 @@ export function makeDisplays(amount: AmountType, parentElement, domOptions) {
   }
   return displays;
 }
-export function updateDisplay(segments, display) {
+export function updateDisplay(segments: segmentNameType[], display) {
   for (const segmentName of segmentNames) {
     display.classList.remove(segmentName);
   }
@@ -51,13 +55,14 @@ export function updateDisplay(segments, display) {
     display.classList.add(segmentName);
   }
 }
-export function updateDisplayBlock(segments, parentElement, domOptions: domOptionsType) {
+export function updateDisplayBlock(segments: segmentNameType[][], parentElement: HTMLElement, domOptions: domOptionsType) {
   const displays = makeDisplays(segments.length, parentElement, domOptions);
   segments.forEach((segment, i) => {
     updateDisplay(segment, displays[i]);
   });
 }
-function startAnimationBuilder(frameBuffers) {
+//TODO
+function startAnimationBuilder(frameBuffers: Map<any, any>): (_: any, __: any) => void {
   return function start(frames, parent) {
     frameBuffers.set(parent, [...frames].reverse());
   };
@@ -103,10 +108,10 @@ export function getDefaultAnimations(start) {
     mix: carryRight(animateMix, start),
   };
 }
-export function getDefaultAnimationsWrappers(animations, target, input) {
+export function getDefaultAnimationsWrappers(animations, target: HTMLDivElement, input: HTMLInputElement) {
   return {
-    typing: () => carryRight(animations.typing, target)(input.value),
-    blink: () => carryRight(animations.blink, target)(input.value),
+    typing: () => carryRight(animations.typing, target)(input?.value),
+    blink: () => carryRight(animations.blink, target)(input?.value),
     marquee: () => carryRight(animations.marquee, target)(input.value),
     mix: () => carryRight(animations.mix, target)(input.value),
   };
